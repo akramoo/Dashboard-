@@ -12,7 +12,13 @@ const Sidebar = () => {
   return (
     <div className={styles.container}>
       <div className={styles.user}>
-        <Image className={styles.userImage} src="/noavatar.png" height={50} width={50} alt="" />
+        <Image
+          className={styles.userImage}
+          src="/noavatar.png"
+          height={50}
+          width={50}
+          alt=""
+        />
         <div className={styles.userDetails}>
           <span className={styles.userName}>John Joe</span>
           <span className={styles.userTitle}>Adminstrator</span>
@@ -25,7 +31,7 @@ const Sidebar = () => {
             {cat.list.map((item) => (
               <MenuLink item={item} key={item.title} />
             ))}
-            </li>
+          </li>
         ))}
       </ul>
     </div>
