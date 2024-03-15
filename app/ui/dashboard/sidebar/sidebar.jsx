@@ -4,6 +4,8 @@ import styles from "./sidebar.module.css";
 // importing the object
 import menuItems from "./menuItems.js";
 
+import { MdLogout } from "react-icons/md";
+
 // importing the components
 import MenuLink from "./menuLink/menuLink";
 import Image from "next/image";
@@ -34,6 +36,10 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
+      <button className={styles.logout}>
+        <MdLogout />
+        Logout
+      </button>
     </div>
   );
 };
