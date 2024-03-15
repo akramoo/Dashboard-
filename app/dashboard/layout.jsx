@@ -7,10 +7,10 @@ const Layout = ({ children }) => {
     return ( 
      <div className={styles.container}>
       <div className={styles.menu}>
-        <Navbar />
+        <Sidebar />
       </div>
       <div className={styles.content}>
-        <Sidebar />
+        <Navbar />
         {children}
       </div>
      </div>
