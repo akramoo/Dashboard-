@@ -1,6 +1,6 @@
 **Dashboard README**
 
-Welcome to our dashboard project! Our dashboard provides a streamlined interface for accessing key information and functionalities. It's designed to be intuitive, customizable, and responsive.
+Welcome to my dashboard project! This dashboard provides a streamlined interface for accessing key information and functionalities. It's designed to be intuitive, customizable, and responsive.
 
 ### Features:
 - **User-Friendly Interface:** Easy navigation for efficient workflow.
