@@ -1,6 +1,6 @@
 import styles from './transactions.module.css'
 
-const transactions = () => {
+const Transactions = () => {
   return (
     <div className={styles.container}>
         transactions
@@ -8,5 +8,5 @@ const transactions = () => {
   )
 }
 
-export default transactions
+export default Transactions
 

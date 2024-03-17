@@ -1,6 +1,6 @@
 import styles from './chart.module.css'
 
-const chart = () => {
+const Chart = () => {
   return (
     <div className={styles.container}>
         chart
@@ -8,5 +8,5 @@ const chart = () => {
   )
 }
 
-export default chart
+export default Chart
 

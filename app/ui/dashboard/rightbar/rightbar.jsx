@@ -1,6 +1,6 @@
 import styles from './rightbar.module.css'
 
-const rightbar = () => {
+const Rightbar = () => {
   return (
     <div className={styles.container}>
         rightbar
@@ -8,5 +8,5 @@ const rightbar = () => {
   )
 }
 
-export default rightbar
+export default Rightbar
 
