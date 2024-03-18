@@ -5,7 +5,7 @@ Welcome to my dashboard project! This dashboard provides a streamlined interface
 ### Features:
 - **User-Friendly Interface:** Easy navigation for efficient workflow.
 - **Customizable Widgets:** Tailor the dashboard to your needs.
-- **Real-Time Updates:** Stay informed with live data.
+- **Real-Time Updates:** Stay informed with live data from local or online host.
 - **Responsive Design:** Accessible from any device.
 
 ### Usage:
