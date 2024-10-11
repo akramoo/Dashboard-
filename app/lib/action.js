@@ -38,6 +38,22 @@ export const addUser = async (formData) => {
     redirect("/dashboard/users");
 };
 
+export const deleteUser = async (formData) => {
+    const { id } = Object.fromEntries(formData);
+
+    try{
+
+        connectToDB();
+        await User.findByIdAndDelete(id);
+
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to add user !");
+    }
+
+    revalidatePath("/dashboard/users");
+};
+
 export const addProduct = async (formData) => {
     const {title, desc, price, stock, color, size} = Object.fromEntries(formData);
 
@@ -62,4 +78,20 @@ export const addProduct = async (formData) => {
 
     revalidatePath("/dashboard/products");
     redirect("/dashboard/products");
+};
+
+export const deleteProduct = async (formData) => {
+    const { id } = Object.fromEntries(formData);
+
+    try{
+
+        connectToDB();
+        await Product.findByIdAndDelete(id);
+
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to add user !");
+    }
+
+    revalidatePath("/dashboard/products");
 };
