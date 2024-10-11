@@ -1,9 +1,9 @@
-import { fatchUser } from "@/app/lib/data";
+import { fatchUser } from "@/app/lib/data/userData";
 import styles from "@/app/ui/dashboard/users/singleUser/singleUser.module.css";
 import Image from "next/image";
 
 const SingleUserPage = ({ params }) => {
-  
+
   const { id } = params;
   const user = fatchUser(id);
 
@@ -11,9 +11,9 @@ const SingleUserPage = ({ params }) => {
     <div className={styles.container}>
       <div className={styles.infoContainer}>
         <div className={styles.imgContainer}>
-          <Image src="/noavatar.png" alt="" fill />
+          <Image src={user.img || "/noavatar.png"} alt="" fill />
         </div>
-        John Doe
+        {user.username}
       </div>
       <div className={styles.formContainer}>
         <form action="" className={styles.form}>

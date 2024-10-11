@@ -6,8 +6,8 @@ import styles from "@/app/ui/dashboard/products/products.module.css"
 import Image from "next/image"
 import Link from "next/link"
 
-import { fatchProducts } from "@/app/lib/data"
-import { deleteProduct } from "@/app/lib/action"
+import { fatchProducts } from "@/app/lib/data/productData"
+import { deleteProduct } from "@/app/lib/server/productAction"
 
 const ProductsPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";

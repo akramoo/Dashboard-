@@ -3,8 +3,8 @@ import styles from "@/app/ui/dashboard/users/users.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
-import { fatchUsers } from "@/app/lib/data";
-import { deleteUser } from "@/app/lib/action";
+import { fatchUsers } from "@/app/lib/data/userData";
+import { deleteUser } from "@/app/lib/server/userAction";
 
 const UsersPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";
