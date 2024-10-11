@@ -7,6 +7,7 @@ import Image from "next/image"
 import Link from "next/link"
 
 import { fatchProducts } from "@/app/lib/data"
+import { deleteProduct } from "@/app/lib/action"
 
 const ProductsPage = async ({ searchParams }) => {
   const q = searchParams?.q || "";
@@ -59,9 +60,12 @@ const ProductsPage = async ({ searchParams }) => {
                       View
                     </button>
                   </Link>
+                  <form action={deleteProduct}>
+                    <input type="hidden" name="id" value={product.id} />
                     <button className={`${styles.button} ${styles.delete}`}>
                       Delete
                     </button>
+                  </form>
                 </div>
               </td>
             </tr>
