@@ -1,8 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { User } from "./modules/user";
-import { connectToDB } from "./utils";
+import { User } from "@/app/lib/modules/user.js";
+import { connectToDB } from "@/app/lib/utils.js";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 
@@ -51,13 +51,13 @@ export const deleteUser = async (formData) => {
 };
 
 export const UpdateUser = async (formData) => {
-  const { username, email, password, phone, address, isAdmin, isActive } =
+  const { id, username, email, password, phone, address, isAdmin, isActive } =
     Object.fromEntries(formData);
 
   try {
     connectToDB();
 
-    const updateFiled = {
+    let updateFiled = {
       username,
       email,
       password,
@@ -67,12 +67,18 @@ export const UpdateUser = async (formData) => {
       isActive,
     };
 
-    Object.keys(updateFiled).forEach(
-      (key) => (updateFiled[key] === "" || undefined) && delete updateFiled[key]
-    );
+    Object.keys(updateFiled).forEach((key) => {
+      if (updateFiled[key] === "" || updateFiled[key] === undefined) {
+        delete updateFiled[key];
+      }
+    });
 
-    await User.findByIdAndUpdate(id, updateFiled)
+    if (updateFiled.password) {
+      const salt = await bcrypt.genSalt(10);
+      updateFiled.password = await bcrypt.hash(updateFiled.password, salt);
+    }
 
+    await User.findByIdAndUpdate(id, updateFiled);
   } catch (error) {
     console.log(error);
     throw new Error("Failed to update user !");
