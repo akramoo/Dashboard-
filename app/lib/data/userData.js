@@ -1,5 +1,5 @@
-import { User } from "./modules/user.js";
-import { connectToDB } from "./utils.js";
+import { User } from "@/app/lib/modules/user.js";
+import { connectToDB } from "@/app/lib/utils.js";
 
 export const fatchUsers = async (q, page) => {
   const regex = new RegExp(q, "i");
