@@ -6,7 +6,13 @@ import styles from "@/app/ui/dashboard/products/products.module.css"
 import Image from "next/image"
 import Link from "next/link"
 
-const ProductsPage = () => {
+import { fatchProducts } from "@/app/lib/data"
+
+const ProductsPage = async ({ searchParams }) => {
+  const q = searchParams?.q || "";
+  const page = searchParams?.page || 1;
+  const { count, products } = await fatchProducts(q, page);
+
     return (
       <div className={styles.container}>
       <div className={styles.top}>
@@ -27,7 +33,9 @@ const ProductsPage = () => {
           </tr>
         </thead>
         <tbody>
-            <tr>
+          {
+            products?.map((product) => (
+              <tr key={product.id}>
               <td>
                 <div className={styles.product}>
                   <Image
@@ -37,13 +45,13 @@ const ProductsPage = () => {
                     height={40}
                     className={styles.productImage}
                   />
-                  IPhone
+                  {product.title}
                 </div>
               </td>
-              <td>Desc</td>
-              <td>300$</td>
-              <td>12.04.2022</td>
-              <td>72</td>
+              <td>{product.desc}</td>
+              <td>{product.price}</td>
+              <td>{product.createdAt?.toString().splice(4,16)}</td>
+              <td>{product.stock}</td>
               <td>
                 <div className={styles.buttons}>
                   <Link href="/dashboard/products/test2">
@@ -57,9 +65,11 @@ const ProductsPage = () => {
                 </div>
               </td>
             </tr>
+            ))
+          }
         </tbody>
       </table>
-      <Pagination />
+      <Pagination count={count}/>
     </div>
     )
   }
