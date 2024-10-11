@@ -7,48 +7,77 @@ import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 
 export const addUser = async (formData) => {
-    const {username, email, password, phone,  address, isAdmin, isActive} = Object.fromEntries(formData);
+  const { username, email, password, phone, address, isAdmin, isActive } =
+    Object.fromEntries(formData);
 
-    try{
+  try {
+    connectToDB();
 
-        connectToDB();
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+    const newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+      phone,
+      address,
+      isAdmin,
+      isActive,
+    });
 
-        const newUser = new User({
-            username,
-            email,
-            password: hashedPassword,
-            phone,
-            address,
-            isAdmin,
-            isActive
-        });
+    await newUser.save();
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to add user !");
+  }
 
-        await newUser.save();
-
-    } catch (error) {
-        console.log(error);
-        throw new Error("Failed to add user !");
-    }
-
-    revalidatePath("/dashboard/users");
-    redirect("/dashboard/users");
+  revalidatePath("/dashboard/users");
+  redirect("/dashboard/users");
 };
 
 export const deleteUser = async (formData) => {
-    const { id } = Object.fromEntries(formData);
+  const { id } = Object.fromEntries(formData);
 
-    try{
+  try {
+    connectToDB();
+    await User.findByIdAndDelete(id);
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to add user !");
+  }
 
-        connectToDB();
-        await User.findByIdAndDelete(id);
+  revalidatePath("/dashboard/users");
+};
 
-    } catch (error) {
-        console.log(error);
-        throw new Error("Failed to add user !");
-    }
+export const UpdateUser = async (formData) => {
+  const { username, email, password, phone, address, isAdmin, isActive } =
+    Object.fromEntries(formData);
 
-    revalidatePath("/dashboard/users");
+  try {
+    connectToDB();
+
+    const updateFiled = {
+      username,
+      email,
+      password,
+      phone,
+      address,
+      isAdmin,
+      isActive,
+    };
+
+    Object.keys(updateFiled).forEach(
+      (key) => (updateFiled[key] === "" || undefined) && delete updateFiled[key]
+    );
+
+    await User.findByIdAndUpdate(id, updateFiled)
+
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to update user !");
+  }
+
+  revalidatePath("/dashboard/users");
+  redirect("/dashboard/users");
 };
