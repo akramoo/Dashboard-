@@ -1,48 +1,77 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { connectToDB } from "./utils";
+import { connectToDB } from "@/app/lib/utils.js";
 import { redirect } from "next/navigation";
-import { Product } from "./modules/product";
+import { Product } from "@/app/lib/modules/product.js";
 
 export const addProduct = async (formData) => {
-    const {title, desc, price, stock, color, size} = Object.fromEntries(formData);
+  const { title, desc, price, stock, color, size } =
+    Object.fromEntries(formData);
 
-    try{
+  try {
+    connectToDB();
+    const newProduct = new Product({
+      title,
+      desc,
+      price,
+      stock,
+      color,
+      size,
+    });
 
-        connectToDB();
-        const newProduct = new Product({
-            title, 
-            desc, 
-            price, 
-            stock, 
-            color, 
-            size
-        });
+    await newProduct.save();
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to add user !");
+  }
 
-        await newProduct.save();
-
-    } catch (error) {
-        console.log(error);
-        throw new Error("Failed to add user !");
-    }
-
-    revalidatePath("/dashboard/products");
-    redirect("/dashboard/products");
+  revalidatePath("/dashboard/products");
+  redirect("/dashboard/products");
 };
 
 export const deleteProduct = async (formData) => {
-    const { id } = Object.fromEntries(formData);
+  const { id } = Object.fromEntries(formData);
 
-    try{
+  try {
+    connectToDB();
+    await Product.findByIdAndDelete(id);
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to add user !");
+  }
 
-        connectToDB();
-        await Product.findByIdAndDelete(id);
+  revalidatePath("/dashboard/products");
+};
 
-    } catch (error) {
-        console.log(error);
-        throw new Error("Failed to add user !");
-    }
+export const updateProduct = async (formData) => {
+  const { id, title, desc, price, stock, color, size } =
+    Object.fromEntries(formData);
 
-    revalidatePath("/dashboard/products");
+  try {
+    connectToDB();
+
+    let updateFiled = {
+      title,
+      desc,
+      price,
+      stock,
+      color,
+      size,
+    };
+
+    Object.keys(updateFiled).forEach((key) => {
+      if (updateFiled[key] === "" || updateFiled[key] === undefined) {
+        delete updateFiled[key];
+      }
+    });
+
+    await Product.findByIdAndUpdate(id, updateFiled);
+  } catch (error) {
+    console.log(error);
+    throw new Error("Failed to add product !");
+  }
+
+  revalidatePath("/dashboard/products");
+  redirect("/dashboard/products");
 };
