@@ -5,7 +5,6 @@ import { User } from "./modules/user";
 import { connectToDB } from "./utils";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
-import { Product } from "./modules/product";
 
 export const addUser = async (formData) => {
     const {username, email, password, phone,  address, isAdmin, isActive} = Object.fromEntries(formData);
@@ -52,46 +51,4 @@ export const deleteUser = async (formData) => {
     }
 
     revalidatePath("/dashboard/users");
-};
-
-export const addProduct = async (formData) => {
-    const {title, desc, price, stock, color, size} = Object.fromEntries(formData);
-
-    try{
-
-        connectToDB();
-        const newProduct = new Product({
-            title, 
-            desc, 
-            price, 
-            stock, 
-            color, 
-            size
-        });
-
-        await newProduct.save();
-
-    } catch (error) {
-        console.log(error);
-        throw new Error("Failed to add user !");
-    }
-
-    revalidatePath("/dashboard/products");
-    redirect("/dashboard/products");
-};
-
-export const deleteProduct = async (formData) => {
-    const { id } = Object.fromEntries(formData);
-
-    try{
-
-        connectToDB();
-        await Product.findByIdAndDelete(id);
-
-    } catch (error) {
-        console.log(error);
-        throw new Error("Failed to add user !");
-    }
-
-    revalidatePath("/dashboard/products");
 };
