@@ -1,43 +1,48 @@
+import { updateProduct } from "@/app/lib/server/productAction";
 import styles from "@/app/ui/dashboard/products/singleProduct/singleProduct.module.css";
 import Image from "next/image";
 
-const SingleProductPage = () => {
+const SingleProductPage = async ({ params }) => {
+
+  const { id } = params;
+  const product = await fatchProduct(id);
+
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
         <div className={styles.imgContainer}>
-          <Image src="/noavatar.png" alt="" fill />
+          <Image src={product.img || "/noavatar.png"} alt="" fill />
         </div>
-        TechVision X1 {/* Displaying the product name */}
+        {product.title}
       </div>
       <div className={styles.formContainer}>
-        <form action="" className={styles.form}>
-          <input type="hidden" name="id" />
+        <form action={updateProduct} className={styles.form}>
+          <input type="hidden" name="id" value={product.id} />
           <label>Title</label>
-          <input type="text" name="title" placeholder="TechVision X1" />{" "}
+          <input type="text" name="title" placeholder={product.title} />{" "}
           {/* Placeholder for product title */}
           <label>Price</label>
-          <input type="number" name="price" placeholder="Enter price" />{" "}
+          <input type="number" name="price" placeholder={product.price} />{" "}
           {/* Placeholder for product price */}
           <label>Stock</label>
           <input
             type="number"
             name="stock"
-            placeholder="Enter stock quantity"
+            placeholder={product.stock}
           />{" "}
           {/* Placeholder for product stock */}
           <label>Color</label>
           <input
             type="text"
             name="color"
-            placeholder="Enter color or leave blank"
+            placeholder={product.color}
           />{" "}
           {/* Placeholder for product color */}
           <label>Size</label>
           <textarea
             type="text"
             name="size"
-            placeholder="Enter size or leave blank"
+            placeholder={product.size}
           />{" "}
           {/* Placeholder for product size */}
           <label>Category</label>
@@ -50,7 +55,7 @@ const SingleProductPage = () => {
             name="desc"
             id="desc"
             rows="10"
-            placeholder="Enter product description"
+            placeholder={product.desc}
           ></textarea>{" "}
           {/* Placeholder for product description */}
           <button>Update</button>
