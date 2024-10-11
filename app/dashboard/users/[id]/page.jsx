@@ -1,7 +1,12 @@
+import { fatchUser } from "@/app/lib/data";
 import styles from "@/app/ui/dashboard/users/singleUser/singleUser.module.css";
 import Image from "next/image";
 
-const SingleUserPage = () => {
+const SingleUserPage = ({ params }) => {
+  
+  const { id } = params;
+  const user = fatchUser(id);
+
   return (
     <div className={styles.container}>
       <div className={styles.infoContainer}>
