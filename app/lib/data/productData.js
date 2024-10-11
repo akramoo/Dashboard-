@@ -1,5 +1,5 @@
-import { Product } from "./modules/product.js";
-import { connectToDB } from "./utils.js";
+import { Product } from "@/app/lib/modules/product.js";
+import { connectToDB } from "@/app/lib/utils.js";
 
 export const fatchProducts = async (q, page) => {
   const regex = new RegExp(q, "i");
