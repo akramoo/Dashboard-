@@ -10,7 +10,12 @@ import { MdLogout } from "react-icons/md";
 import MenuLink from "./menuLink/menuLink";
 import Image from "next/image";
 
-const Sidebar = () => {
+import { logOut } from "@/app/lib/server/authenticate";
+
+const Sidebar = async () => {
+  // const session = await auth();
+  // console.log("",session);
+
   return (
     <div className={styles.container}>
       <div className={styles.user}>
@@ -36,10 +41,14 @@ const Sidebar = () => {
           </li>
         ))}
       </ul>
-      <button className={styles.logout}>
-        <MdLogout />
-        Logout
-      </button>
+      <form
+        action={logOut}
+      >
+        <button className={styles.logout}>
+          <MdLogout />
+          Logout
+        </button>
+      </form>
     </div>
   );
 };
