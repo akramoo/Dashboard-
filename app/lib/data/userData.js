@@ -6,7 +6,7 @@ export const fatchUsers = async (q, page) => {
   const ITEM_PER_PAGE = 2;
   try {
     connectToDB();
-    const count = await User.find().count();
+    const count = await User.find().countDocuments();
     const users = await User.find({ username: { $regex: regex } })
       .limit(ITEM_PER_PAGE)
       .skip(ITEM_PER_PAGE * (page - 1));

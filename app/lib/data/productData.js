@@ -6,14 +6,15 @@ export const fatchProducts = async (q, page) => {
   const ITEM_PER_PAGE = 2;
   try {
     connectToDB();
-    const count = await Product.find().count();
+    const count = await Product.find().countDocuments();
     const products = await Product.find({ title: { $regex: regex } })
       .limit(ITEM_PER_PAGE)
       .skip(ITEM_PER_PAGE * (page - 1));
     
     return { count, products };
   } catch (error) {
-    throw new Error("Failed to fatch Product !");
+    console.log(error);
+    throw new Error("Failed to fatch Products !");
   }
 };
 
@@ -23,6 +24,6 @@ export const fatchProduct = async (id) => {
     const product = await Product.findById(id);
     return  product;
   } catch (error) {
-    throw new Error("Failed to fatch product !");
+    throw new Error("Failed to fatch Product !");
   }
 };
